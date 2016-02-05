@@ -29,6 +29,15 @@ We will install the development environment so that Fedora managed packages are
 installed in a template VM (as they are signed) and the Ruby based packages are
 installed in a `blog` development VM.
 
+Background
+----------
+
+After reading [Joanna Rutkowska](http://blog.invisiblethings.org/about/)'s
+[blog post with the same title](http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html), I decide
+to do the same and migrate my [Blogger site](http://bowabos.blogspot.co.uk/) to
+what I suspect is the same toolchain. As I didn't know any of the tools used,
+I took the oportunity to write this post to document the process.
+
 Install the software
 --------------------
 
