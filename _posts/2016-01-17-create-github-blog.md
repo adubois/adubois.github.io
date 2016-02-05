@@ -33,7 +33,7 @@ Install the software
 
 Install the Ruby development package from a terminal window in your template VM
 
-```ruby
+```bash
 sudo yum install ruby-devel git
 ```
 
@@ -128,7 +128,7 @@ Configure site
 We are now going to edit the Jekyll `_config.yml` file to start personalize you
 site
 
-```
+```yml
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
@@ -157,7 +157,7 @@ restart it (this will not be required for different files updates).
 Refresh your browser and "Voila".
 
 Once you are happy with the changes, stage and commit them
-```
+```bash
 gs
 ga .
 gc -m "Site configuration initialized"
@@ -169,7 +169,7 @@ Publish content
 Now that you have tested and commited your changes we can publish them (git
 push)
 
-```
+```bash
 gp master
 ```
 
