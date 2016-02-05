@@ -33,7 +33,7 @@ Install the software
 
 Install the Ruby development package from a terminal window in your template VM
 
-```bash
+```ruby
 sudo yum install ruby-devel git
 ```
 
