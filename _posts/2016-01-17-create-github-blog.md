@@ -9,8 +9,9 @@ Github provide a very efficient worflow for you to host your blog on your own
 domain (http://yoursite.yourdomain.com or http://username.github.io).
 
 This howto describes in details how to set up a development environment
-on [QubesOS] for you to edit and check your site before publishing it on Github.
-If you are using a different OS, most of the points are still useful.
+on [QubesOS](https://www.qubes-os.org/) for you to edit and check your site
+before publishing it on Github. If you are using a different OS, most of the
+points are still useful.
 
 This Howto can be decomposed in the following high level tasks
 
@@ -42,14 +43,17 @@ Create a blog VM
 
 Create a new `Blue` (showing that it is a pretty safe environment as we'll be
 the one generating files and the only interraction after set-up should be with
-our Github repository), `blog` VM as documented in [Qubes's getting started]
+our Github repository), `blog` VM as documented in
+[Qubes's getting started](https://www.qubes-os.org/getting-started/)
 page using the default Fedora template.
 
 Install Jekyll
 -------------
 
-[Jekyll] is a system which transforms your plain text ( [Markdown] ) into
-a static web site and blog. Markdown is an [easy format][Markdown Cheatsheet]
+[Jekyll](http://jekyllrb.com) is a system which transforms your plain text
+( [Markdown](https://daringfireball.net/projects/markdown/) ) into
+a static web site and blog. Markdown is an
+[easy format](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 to use.
 
 Install the Jekyll package from a terminal window in our `blog` VM
@@ -61,10 +65,11 @@ gem install jekyll
 Setup Github pages
 ------------------
 
-[GitHub Pages] allows you to host a website directly from your [Github]
-repository: "Just edit, push, and your changes are live". We wll just add sign
-between the edit and the push as it is essential that everybody start to sign
-what they produce so that our integrity and privacy is respected.
+[GitHub Pages](https://pages.github.com) allows you to host a website directly
+from your [Github](https://github.com) repository: "Just edit, push, and your 
+changes are live". We wll just add sign between the edit and the push as it is
+essential that everybody start to sign what they produce so that our integrity
+and privacy is respected.
 
 Assuming your have a `username` Github account, please create via the Github web
 site a new repository named `username.github.io`
@@ -74,7 +79,8 @@ site a new repository named `username.github.io`
 Setup Git
 ---------
 
-[Git] allows you to manage source files and sign your commits.
+[Git](https://en.wikipedia.org/wiki/Git_%28software%29) allows you to manage
+source files and sign your commits.
 
 Let's first follow the instructions in this previous Howto post:
 [start with Git], to setup your Git environment.
@@ -120,7 +126,7 @@ jekyll serve
 
 Jekyll now serves your local development site locally (you just need to press
 Ctrl+C to stop it). You can browse to it from firefox in the `blog` VM via
-[http://localhost:4000]
+http://localhost:4000
 
 Configure site
 --------------
@@ -173,13 +179,3 @@ push)
 gp master
 ```
 
-
-[QubesOS]: https://www.qubes-os.org/
-[Qubes's getting started]: 
-[Jekyll]: http://jekyllrb.com
-[Markdown]: https://daringfireball.net/projects/markdown/
-[Markdown Cheatsheet]:
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-[GitHub Pages]: https://pages.github.com
-[Github]: https://github.com
-[start with Git]: /howto/2016/01/16/start-with-git/
