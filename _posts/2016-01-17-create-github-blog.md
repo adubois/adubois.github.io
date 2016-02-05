@@ -2,7 +2,7 @@
 layout: post
 title:  "Create a Github Blog"
 date:   2016-01-17 20:03:44 +0000
-categories: Howto
+categories: howto
 ---
 
 Github provide a very efficient worflow for you to host your blog on your own
