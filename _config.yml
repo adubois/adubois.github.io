@@ -9,8 +9,7 @@
 title: Bits of wood and bits of strings
 email: bowabos@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Blog covering QubesOS, personnal IT security, providing services from your
-server to your home devices, with a very strong focus on security.
+  Blog covering QubesOS, personnal IT security, providing services from your server to your home devices, with a very strong focus on security.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://adubois.github.io" # the base hostname & protocol for your site
 twitter_username: alexdubois73
