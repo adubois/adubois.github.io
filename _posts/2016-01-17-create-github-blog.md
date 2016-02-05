@@ -24,6 +24,7 @@ This Howto can be decomposed in the following high level tasks
  * Test site
  * Configure site
  * Publish site
+ * Setup custom domain
 
 We will install the development environment so that Fedora managed packages are
 installed in a template VM (as they are signed) and the Ruby based packages are
@@ -188,4 +189,28 @@ push)
 ```bash
 gp master
 ```
+
+Setup custom domain
+-------------------
+
+Instead of hosting your site at https://username.github.io, you can setup a
+custom domain such as https://yoursite.yourdomain.com by adding a `CNAME` file
+(DNS alias) to your repository and to your DNS provider. The first to allow
+Github to serve your site as a load balanced virtual domain and the second to
+direct users to Github's server IPs.
+
+```
+yoursite.yourdomain.com
+```
+
+Let's publish this change:
+
+```
+ga .
+gc -m "Adding custom domain"
+gp
+```
+
+Finally, you will have to configure the CNAME with your DNS provider by
+[following these tips](https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/)
 
