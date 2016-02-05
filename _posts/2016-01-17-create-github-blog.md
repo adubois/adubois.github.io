@@ -92,7 +92,8 @@ Setup Git
 source files and sign your commits.
 
 Let's first follow the instructions in this previous Howto post:
-[start with Git], to setup your Git environment.
+[start with Git](/howto/2016/01/16/starting-with-git/), to setup your Git
+environment.
 
 Create Jekyll site
 ------------------
