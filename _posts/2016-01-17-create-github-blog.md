@@ -214,5 +214,5 @@ gp
 Finally, you will have to configure the CNAME with your DNS provider by
 [following these tips](https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/)
 
-[Joanna new Git based blog]: (http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html)
+[Joanna new Git based blog]: http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html
 
