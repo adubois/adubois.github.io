@@ -11,12 +11,12 @@ It has been found suitable to manage documentation, blog posts, static web sites
 and even microkernel binaries.
 If you want to use Git, as I
 [now do](https://adubois.github.io/howto/2016/01/17/create-github-blog), here
-are the steps required to get started.
+are the steps required to get started
 
  * Install
  * Configure
- * Create a Github repository
- * Create a local clone
+ * Create Github repository
+ * Create local clone
  
 This post is based on:
 
@@ -58,7 +58,7 @@ running.
 
 To make our life easier, let's set up few aliases:
 
-```
+```bash
 git config --global alias.co checkout
 git config --global alias.ci commit
 git config --global alias.st status
@@ -68,11 +68,11 @@ git config --global alias.type 'cat-file -t'
 git config --global alias.dump 'cat-file -p'
 ```
 
-And let's add some even shorter aliases in our shell by editing `.bashrc` in
+Let's add some even shorter aliases in our shell by editing `.bashrc` in
 our home folder, please note that this may hide command you are using (i.e. gs
 for ghostscript):
 
-```
+```bash
 alias gs='git status '
 alias ga='git add '
 alias gb='git branch '
@@ -83,15 +83,15 @@ alias gp='git push origin '
 alias gh='git hist'
 ```
 
-Create a Github repository
---------------------------
+Create Github repository
+------------------------
 
 If you want your content to be hosted in a public repository, Github is one of
 the natural choice at the moment. A public repository may be a good choice so
 that others can fork your repo and either:
 
  * Contribute to it by submitting `pull requests` or
- * Fork it to start their own and leverage on your work
+ * Fork it to start a new project and leverage on your work
 
 Follow the instructions in the
 [Create a repo](https://help.github.com/articles/create-a-repo/) page from
@@ -100,8 +100,8 @@ Github to:
  * Create an account
  * Create a repository `myrepo`
 
-Create a local clone
---------------------
+Create local clone
+------------------
 
 From a terminal window in an App VM
 
