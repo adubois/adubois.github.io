@@ -192,7 +192,7 @@ Setup custom domain
 Instead of hosting your site at https://username.github.io, you can setup a
 custom domain such as http://yoursite.yourdomain.com.
 
-Note that this will remove the `s` in https but blogs integrity should be
+Note that this will loose the `s` in https but blogs integrity should be
 verified using Git signed commits rather than relying on a broken public
 certificates infrastructure. However Github may allow in the future the upload
 of private key and certificate to put back some level of security.
