@@ -5,13 +5,12 @@ date:   2016-01-16 7:03:44 +0000
 categories: howto
 ---
 
-[Git](https://en.wikipedia.org/wiki/Git_%28software%29) is a distributed
-versioning system. It started as a tool developed to maintain the Linux kernel.
-It has been found suitable to manage documentation, blog posts, static web sites
-and even microkernel binaries.
-If you want to use Git, as I
-[now do](https://adubois.github.io/howto/2016/01/17/create-github-blog), here
-are the steps required to get started
+[Git] is a distributed versioning system. It started as a tool developed to
+maintain the Linux kernel. It has been found suitable to manage documentation,
+blog posts, static web sites and even microkernel binaries.
+
+If you want to use Git, as I [now do], here are the steps required to get
+started
 
  * Install
  * Configure
@@ -20,8 +19,9 @@ are the steps required to get started
  
 This post is based on:
 
- * [Git Howto](http://githowto.com/)
- * [Github Bootcamp](https://help.github.com/categories/bootcamp/)
+ * [Git Howto]
+ * [Github Bootcamp]
+
 
 Install
 -------
@@ -93,9 +93,7 @@ that others can fork your repo and either:
  * Contribute to it by submitting `pull requests` or
  * Fork it to start a new project and leverage on your work
 
-Follow the instructions in the
-[Create a repo](https://help.github.com/articles/create-a-repo/) page from
-Github to:
+Follow the instructions in the [Create a repo] page from Github to:
 
  * Create an account
  * Create a repository `myrepo`
@@ -110,3 +108,10 @@ git clone https://github.com/username/myrepo
 ```
 
 This is it to get started with Git.
+
+[Git]: https://en.wikipedia.org/wiki/Git_%28software%29
+[now do]: https://adubois.github.io/howto/2016/01/17/create-github-blog
+[Git Howto]: http://githowto.com/
+[Github Bootcamp]: https://help.github.com/categories/bootcamp/
+[Create a repo]: https://help.github.com/articles/create-a-repo/
+
