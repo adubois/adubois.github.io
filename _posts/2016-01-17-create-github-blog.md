@@ -5,18 +5,18 @@ date:   2016-01-17 20:03:44 +0000
 categories: howto
 ---
 
-Github provide a very efficient worflow for you to host your blog on your own
+Github provides a very efficient worflow for you to host your blog on your own
 domain (http://yoursite.yourdomain.com or http://username.github.io).
 
 This howto describes in details how to set up a development environment
 on [QubesOS](https://www.qubes-os.org/) for you to edit and check your site
-before publishing it on Github. If you are using a different OS, most of the
-points are still useful.
+before publishing it on [Github](https://github.com). If you are using a
+different OS, most of the points are still useful.
 
 This Howto can be decomposed in the following high level tasks
 
- * Install the required software in a Template VM
- * Create a VM to host the development environment
+ * Install required software in Template VM
+ * Create App VM to host dev environment
  * Install Jekyll
  * Setup Github pages
  * Setup Git
@@ -34,10 +34,10 @@ Background
 ----------
 
 After reading [Joanna Rutkowska](http://blog.invisiblethings.org/about/)'s
-[blog post with the same title](http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html), I decide
-to do the same and migrate my [Blogger site](http://bowabos.blogspot.co.uk/) to
-what I suspect is the same toolchain. As I didn't know any of the tools used,
-I took the oportunity to write this post to document the process.
+[blog post][Joanna new Git based blog], I decide to do the same and migrate my
+[Blogger site](http://bowabos.blogspot.co.uk/) to what I suspect is the same
+toolchain. As I didn't know any of the tools used, I took the oportunity to
+write this post to document the process.
 
 Install the software
 --------------------
@@ -213,4 +213,6 @@ gp
 
 Finally, you will have to configure the CNAME with your DNS provider by
 [following these tips](https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/)
+
+[Joanna new Git based blog](http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html)
 
