@@ -9,8 +9,8 @@ Github provides a very efficient worflow for you to host your blog on your own
 domain (http://yoursite.yourdomain.com or http://username.github.io).
 
 This howto describes in details how to set up a development environment
-on [QubesOS](https://www.qubes-os.org/) for you to edit and check your site
-before publishing it on [Github](https://github.com). If you are using a
+on [QubesOS] for you to edit and check your site
+before publishing it on [Github]. If you are using a
 different OS, most of the points are still useful.
 
 This Howto can be decomposed in the following high level tasks
@@ -33,10 +33,9 @@ installed in a `blog` development VM.
 Background
 ----------
 
-After reading [Joanna Rutkowska](http://blog.invisiblethings.org/about/)'s
-[blog post][Joanna new Git based blog], I decide to do the same and migrate my
-[Blogger site](http://bowabos.blogspot.co.uk/) to what I suspect is the same
-toolchain. As I didn't know any of the tools used, I took the oportunity to
+After reading [Joanna Rutkowska]'s [blog post][Joanna new Git based blog], I
+decide to do the same and migrate [my Blogger site] to what I suspect is the
+same toolchain. As I didn't know any of the tools used, I took the oportunity to
 write this post to document the process.
 
 Install the software
@@ -53,18 +52,15 @@ Create a blog VM
 
 Create a new `Blue` (showing that it is a pretty safe environment as we'll be
 the one generating files and the only interraction after set-up should be with
-our Github repository), `blog` VM as documented in
-[Qubes's getting started](https://www.qubes-os.org/getting-started/)
+our Github repository), `blog` VM as documented in [Qubes's getting started]
 page using the default Fedora template.
 
 Install Jekyll
 -------------
 
-[Jekyll](http://jekyllrb.com) is a system which transforms your plain text
-( [Markdown](https://daringfireball.net/projects/markdown/) ) into
-a static web site and blog. Markdown is an
-[easy format](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-to use.
+[Jekyll] is a system which transforms your plain text( [Markdown] ) into a
+static web site and blog. Kramdown (Github's Markdown) is an [easy format] to
+use.
 
 Install the Jekyll package from a terminal window in our `blog` VM
 
@@ -75,26 +71,25 @@ gem install jekyll
 Setup Github pages
 ------------------
 
-[GitHub Pages](https://pages.github.com) allows you to host a website directly
-from your [Github](https://github.com) repository: "Just edit, push, and your 
-changes are live". We wll just add sign between the edit and the push as it is
-essential that everybody start to sign what they produce so that our integrity
-and privacy is respected.
+[GitHub Pages] allows you to host a website directly from your [Github]
+repository: "Just edit, push, and your changes are live". We will just add
+`sign` between the edit and the push as it is essential that we start to sign
+what we produce so that our integrity is respected (assuming that our signing
+key can be kept secret... but that is another story).
 
 Assuming your have a `username` Github account, please create via the Github web
 site a new repository named `username.github.io`
+
  * Which is Public
  * With a .gitignore for Jekyll
 
 Setup Git
 ---------
 
-[Git](https://en.wikipedia.org/wiki/Git_%28software%29) allows you to manage
-source files and sign your commits.
+[Git] allows you to manage source files and sign your commits.
 
 Let's first follow the instructions in this previous Howto post:
-[start with Git](/howto/2016/01/16/starting-with-git/), to setup your Git
-environment.
+[start with Git], to setup your Git environment.
 
 Create Jekyll site
 ------------------
@@ -137,7 +132,7 @@ jekyll serve
 
 Jekyll now serves your local development site locally (you just need to press
 Ctrl+C to stop it). You can browse to it from firefox in the `blog` VM via
-http://localhost:4000
+<http://localhost:4000>
 
 Configure site
 --------------
@@ -174,6 +169,7 @@ restart it (this will not be required for different files updates).
 Refresh your browser and "Voila".
 
 Once you are happy with the changes, stage and commit them
+
 ```bash
 gs
 ga .
@@ -194,16 +190,34 @@ Setup custom domain
 -------------------
 
 Instead of hosting your site at https://username.github.io, you can setup a
-custom domain such as https://yoursite.yourdomain.com by adding a `CNAME` file
-(DNS alias) to your repository and to your DNS provider. The first to allow
-Github to serve your site as a load balanced virtual domain and the second to
-direct users to Github's server IPs.
+custom domain such as http://yoursite.yourdomain.com.
+
+Note that this will remove the `s` in https but blogs integrity should be
+verified using Git signed commits rather than relying on a broken public
+certificates infrastructure. However Github may allow in the future the upload
+of private key and certificate to put back some level of security.
+
+Custom domain can be setup by adding a `CNAME` file (DNS alias)
+
+ * to your Github repository and
+ * to your DNS zone at your DNS provider
+
+The former to allow Github
+
+ * to redirect to yoursite.yourdomain.com users who went to username.github.io
+ * to serve your site as a load balanced virtual domain
+
+The second to
+
+* direct users to Github's server IPs
+
+Add a `CNAME` file containing
 
 ```
 yoursite.yourdomain.com
 ```
 
-Let's publish this change:
+Publish this change
 
 ```
 ga .
@@ -211,8 +225,22 @@ gc -m "Adding custom domain"
 gp
 ```
 
-Finally, you will have to configure the CNAME with your DNS provider by
-[following these tips](https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/)
+Finally, you will have to configure the CNAME with your DNS provider and you may
+[find these tips] useful.
 
+Looking forward  to read your future posts ;-)
+
+[QubesOS]: https://www.qubes-os.org/
+[Joanna Rutkowska]: http://blog.invisiblethings.org/about/
 [Joanna new Git based blog]: http://blog.invisiblethings.org/2015/02/09/my-new-git-based-blog.html
+[my Blogger site]: http://bowabos.blogspot.co.uk/
+[Github]: https://github.com
+[Qubes's getting started]: https://www.qubes-os.org/getting-started/
+[Jekyll]: http://jekyllrb.com
+[Markdown]: https://daringfireball.net/projects/markdown/
+[easy format]: http://kramdown.gettalong.org/syntax.html
+[GitHub Pages]: https://pages.github.com
+[Git]: https://en.wikipedia.org/wiki/Git_%28software%29
+[find these tips]: https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/
 
+[start with Git]: /howto/2016/01/16/starting-with-git/
