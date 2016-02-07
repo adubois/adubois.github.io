@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How-to set up Jira and Confluence on Fedora VM in Qubes OS"
+title:  "How-to set up Jira and Confluence on Fedora VM in Qubes OS 2"
 date:   2013-12-01 21:03:44 +0000
 categories: howto
 ---
@@ -81,7 +81,7 @@ Launch the terminal in the template.
  * Click Application Menu (top left)
  * Select Template fedora-18-x64 / fedora-18-x64: Terminal
 
-Install the PostgreSQL Server by typing in the template Terminal:
+Install the PostgreSQL Server by typing in the template's Terminal:
 
 '''bash
 sudo yum install postgresql-server
