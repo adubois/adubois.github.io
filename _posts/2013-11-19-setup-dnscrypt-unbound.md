@@ -204,7 +204,7 @@ make -j<numberOfCoresOnYourSystem>
 sudo make install
 ```
 
-Configuring the start up script
+### Configuring the start up script ###
 
 In dns VM Terminal:
 
@@ -297,6 +297,25 @@ Finally let's make sure we forward all non served locally requests to dns-crypt
 forward-zone:
     name: "."
     forward-addr: 127.0.0.1@53
+```
+
+Your rc.local script should look like this:
+
+```bash
+#!/bin/bash
+
+/bin/echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+/sbin/ldconfig
+/usr/local/sbin/dnscrypt-proxy --provider-key=B735:1140:206F:225D:3E2B:D822:D7FD:691E:A1C3:3CC8:D666:8D0C:BE04:BFAB:CA43:FB79 --provider-name=2.dnscrypt-cert.opendns.com --resolver-address=208.67.220.220:443 --daemonize
+/usr/bin/sleep 2
+
+# Setting-up and starting unbound
+/usr/bin/cp /rw/config/unbound/unbound.conf /etc/unbound/
+/usr/bin/cp /rw/config/unbound/local.d/local.conf /etc/unbound/local.d/
+/usr/bin/systemctl start unbound &
+/usr/bin/sleep 2
+/usr/sbin/iptables -I INPUT 3 -j ACCEPT -d 10.137.2.x -p udp --sport 1024:65535 --dport 53 -m conntrack --ctstate NEW
+/usr/sbin/iptables -I INPUT 3 -j ACCEPT -d 10.137.2.x -p tcp --sport 1024:65535 --dport 53 -m conntrack --ctstate NEW
 ```
 
 [dnscrypt-proxy]: http://dnscrypt.org/
