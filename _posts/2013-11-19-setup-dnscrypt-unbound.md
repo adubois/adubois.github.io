@@ -299,3 +299,9 @@ forward-zone:
     forward-addr: 127.0.0.1@53
 ```
 
+[dnscrypt-proxy]: http://dnscrypt.org/
+[unbound]: http://unbound.net/
+[QubesOS]: http://qubes-os.org/
+[QubesOS user group post]: https://groups.google.com/forum/#!topic/qubes-users/-WvPZwE4CRc
+[Libsodium]: https://github.com/jedisct1/libsodium
+[QubesOS user documentation page]: http://qubes-os.org/trac/wiki/UserDoc
