@@ -642,11 +642,9 @@ Replace the following line:
 
 ```xml
 <Context path="" docBase="${catalina.base}/atlassian-jira" reloadable="false" useHttpOnly="true">
-```
 
 With:
 
-```xml
 <Context path="/jira" docBase="${catalina.base}/atlassian-jira" reloadable="false" useHttpOnly="true">
 ```
 
@@ -660,11 +658,9 @@ Replace the following line:
 
 ```xml
 <Connector port="8080" maxThreads="150" minSpareThreads="25" connectionTimeout="20000" enableLookups="false" maxHttpHeaderSize="8192" protocol="HTTP/1.1" useBodyEncodingForURI="true" redirectPort="8443" acceptCount="100" disableUploadTimeout="true"/>
-```
 
 With:
 
-```xml
 <Connector port="8080" maxThreads="150" minSpareThreads="25" connectionTimeout="20000" enableLookups="false" maxHttpHeaderSize="8192" protocol="HTTP/1.1" useBodyEncodingForURI="true" redirectPort="8443" acceptCount="100" disableUploadTimeout="true" proxyName="www.example.com" proxyPort="443" scheme="https"/>
 ```
 
@@ -752,11 +748,9 @@ Replace the following line:
 
 ```xml
 <Context path="" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
-```
 
 With:
 
-```xml
 <Context path="/confluence" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
 ```
 
@@ -770,11 +764,9 @@ Replace the following line:
 
 ```xml
 <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="8090" minProcessors="5" maxProcessors="75" enableLookups="false" redirectPort="8443" acceptCount="10" debug="0" connectionTimeout="20000" useURIValidationHack="false" URIEncoding="UTF-8"/>
-```
 
 With:
 
-```xml
 <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="8090" minProcessors="5" maxProcessors="75" enableLookups="false" redirectPort="8443" acceptCount="10" debug="0" connectionTimeout="20000" useURIValidationHack="false" URIEncoding="UTF-8" proxyName="www.example.com" proxyPort="443" scheme="https"/>
 ```
 
