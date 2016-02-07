@@ -87,50 +87,6 @@ Install the PostgreSQL Server by typing in the template\'s Terminal:
 sudo yum install postgresql-server
 '''
 
-### Installing Tomcat ###
-
-Atlassian states that only Oracle JRE is supported. I am going to take the risk
-of using OpenJDK instead as I will have automatic update via fedora patches. I
-will also use the Tomcat package provided by fedora for the same reasons.
-
-Note: If you want to use the Oracle JRE, do not install it in the template but
-in the app VM unless your are ready to patch it when required to ensure all your
-VMs use a patched version or if you are building a dedicated template.
-
-Let\'s install tomcat
-
-'''
-sudo yum install tomcat
-'''
-
-In my case this installs Tomcat 7.0.42 and will use OpenJDK Runtime Environment
-1.7.0_45.
-
-Let\'s create the Jira and Confluence user
-
-'''
-sudo /usr/sbin/useradd -r --comment "Account to run JIRA" --shell /bin/bash jira
-sudo /usr/sbin/useradd -r --comment "Account to run Confluence" --shell /bin/bash confluence
-'''
-
-### Installing Apache httpd ###
-
-Let\'s install httpd and make sure we can SSL enable it
-
-'''
-sudo yum install httpd mod_ssl openssl
-'''
-
-In my case this installs httpd 2.4.6
-
-
-For these changes to be visible to the wiki VM, shutdown the template VM.
-
-'''
-sudo halt
-'''
-
-
 [Jira]: https://www.atlassian.com/software/jira
 [Confluence]: https://www.atlassian.com/software/confluence
 [Tomcat]: http://tomcat.apache.org/
