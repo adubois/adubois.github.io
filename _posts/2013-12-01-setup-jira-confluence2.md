@@ -130,6 +130,7 @@ For these changes to be visible to the wiki VM, shutdown the template VM.
 sudo halt
 '''
 
+Test
 
 [Jira]: https://www.atlassian.com/software/jira
 [Confluence]: https://www.atlassian.com/software/confluence
