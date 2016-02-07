@@ -83,7 +83,7 @@ Launch the terminal in the template.
 
 Install the PostgreSQL Server by typing in the template\'s Terminal:
 
-'''bash
+'''
 sudo yum install postgresql-server
 '''
 
@@ -97,27 +97,27 @@ Note: If you want to use the Oracle JRE, do not install it in the template but
 in the app VM unless your are ready to patch it when required to ensure all your
 VMs use a patched version or if you are building a dedicated template.
 
-Let's install tomcat
+Let\'s install tomcat
 
-'''bash
+'''
 sudo yum install tomcat
 '''
 
 In my case this installs Tomcat 7.0.42 and will use OpenJDK Runtime Environment
 1.7.0_45.
 
-Let's create the Jira and Confluence user
+Let\'s create the Jira and Confluence user
 
-'''bash
+'''
 sudo /usr/sbin/useradd -r --comment "Account to run JIRA" --shell /bin/bash jira
 sudo /usr/sbin/useradd -r --comment "Account to run Confluence" --shell /bin/bash confluence
 '''
 
 ### Installing Apache httpd ###
 
-Let's install httpd and make sure we can SSL enable it
+Let\'s install httpd and make sure we can SSL enable it
 
-'''bash
+'''
 sudo yum install httpd mod_ssl openssl
 '''
 
@@ -126,7 +126,7 @@ In my case this installs httpd 2.4.6
 
 For these changes to be visible to the wiki VM, shutdown the template VM.
 
-'''bash
+'''
 sudo halt
 '''
 
