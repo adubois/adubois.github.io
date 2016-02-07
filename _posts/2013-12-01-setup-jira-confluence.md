@@ -83,9 +83,9 @@ Launch the terminal in the template.
 
 Install the PostgreSQL Server by typing in the template's Terminal:
 
-'''bash
+```bash
 sudo yum install postgresql-server
-'''
+```
 
 ### Installing Tomcat ###
 
@@ -99,36 +99,36 @@ VMs use a patched version or if you are building a dedicated template.
 
 Let's install tomcat
 
-'''bash
+```bash
 sudo yum install tomcat
-'''
+```
 
 In my case this installs Tomcat 7.0.42 and will use OpenJDK Runtime Environment
 1.7.0_45.
 
 Let's create the Jira and Confluence user
 
-'''bash
+```bash
 sudo /usr/sbin/useradd -r --comment "Account to run JIRA" --shell /bin/bash jira
 sudo /usr/sbin/useradd -r --comment "Account to run Confluence" --shell /bin/bash confluence
-'''
+```
 
 ### Installing Apache httpd ###
 
 Let's install httpd and make sure we can SSL enable it
 
-'''bash
+```bash
 sudo yum install httpd mod_ssl openssl
-'''
+```
 
 In my case this installs httpd 2.4.6
 
 
 For these changes to be visible to the wiki VM, shutdown the template VM.
 
-'''bash
+```bash
 sudo halt
-'''
+```
 
 Preparing the Wiki VM
 ---------------------
@@ -159,7 +159,7 @@ will deploy our data so that it survives a reboot.
 
 In Wiki VM's Terminal:
 
-'''bash
+```bash
 cd /rw
 sudo mkdir -p var/pgsql/data
 sudo chown postgres:postgres var/pgsql/data
@@ -167,19 +167,19 @@ sudo chmod 700 var/pgsql/data
 sudo mkdir -p var/pgsql/backups
 sudo chown postgres:postgres var/pgsql/backups
 sudo chmod 700 var/pgsql/backups
-'''
+```
 
 ### Initializing the database ###
 
 Let's initialize the database cluster
 
-'''bash
+```bash
 sudo su
 rm -rf /var/lib/pgsql
 ln -s /rw/var/pgsql /var/lib/pgsql
 postgresql-setup initdb
 exit
-'''
+```
 
 ### Configuring the database cluster ###
 
@@ -189,12 +189,12 @@ Note: If you are new to linux a more natural text editor than [vi] can be used.
 [nano] is a good one... replace vi with nano in all instructions. You just have
 to know to use \[Ctrl\]+\[x\] to exit and save your file.
 
-'''bash
+```bash
 sudo su - postgres
 vi /var/lib/pgsql/data/pg_hba.conf
 host confluence confluence 127.0.0.1/32 md5
 host jira jira 127.0.0.1/32 md5
-'''
+```
 
 Add the following lines toward the end of the file, below the IPv4 local
 connections.
@@ -206,93 +206,93 @@ pgsql/data/pg_hba.conf.
 
 Once done exit from the posgres sudo session
 
-'''bash
+```bash
 exit
-'''
+```
 
 ### Configuring the jira database ###
 
 Let's create the jira database user and the database
 
-'''bash
+```bash
 sudo systemctl start postgresql
 sudo -s -H -u postgres
 /usr/bin/createuser -S -P -E jira
-'''
+```
 
 Enter the password for the jira database user and take note of it. Once done
 exit from the posgres sudo session
 
-'''bash
+```bash
 /usr/bin/createdb --owner jira --encoding utf8 jira
-'''
+```
 
 ### Configuring the confluence database ###
 
 Let's create the confluence database user and the database
 
-'''bash
+```bash
 /usr/bin/createuser -S -P -E confluence
-'''
+```
 
 Enter the password for the confluence database user and take note of it. Once
 done exit from the posgres sudo session.
 
-'''bash
+```bash
 /usr/bin/createdb --owner confluence --encoding utf8 confluence
 exit
-'''
+```
 
 ### Preparing for a reboot ###
 
 Let's now edit our rc.local script so that we set everything in place when the
 VM reboots. In Wiki VM's Terminal:
 
-'''bash
+```bash
 sudo vi config/rc.local
 \#!/bin/bash
 rm -rf /var/lib/pgsql
 ln -s /rw/var/pgsql /var/lib/pgsql
 /usr/bin/systemctl enable postgresql &
 /usr/bin/systemctl start postgresql &
-'''
+```
 
 Let's not forget to make this file executable
 
-'''bash
+```bash
 sudo chmod u+x config/rc.local
-'''
+```
 
 ### Testing the databases ###
 
 Stop the wiki VM
 
-'''bash
+```bash
 sudo halt
-'''
+```
 
 Start the VM by opening its Terminal.
 Let's test our databases.
-'''bash
+```bash
 sudo systemctl status postgresql
-'''
+```
 
 This should give you a status of active (running).
 
 
 Try to connect to the Jira database.
 
-'''bash
+```bash
 psql -U jira -h 127.0.0.1 -p 5432 -d jira
-'''
+```
 
 Note: Exit the database by typing "\q" and pressing \[Enter\]
 
 Try to connect to the Confluence database.
 
-'''bash
+```bash
 psql -U confluence -h 127.0.0.1 -p 5432 -d confluence
-'''
+```
 
 Hopefully you are like me, all set for the next stage.
 
@@ -305,12 +305,12 @@ In the read-write partition, let's first prepare a set of folders on which we
 will deploy our application and data so that they survive a reboot. In Wiki VM's
 Terminal:
 
-'''bash
+```bash
 cd /rw
 sudo mkdir -p opt/jira
 sudo mkdir -p var/log/jira
 sudo mkdir -p var/jira
-'''
+```
 
 ### Integrating with systemd ###
 
@@ -321,14 +321,14 @@ give to this tomcat instance) and set the variables we need. As the file will
 not be persisted in our Qubes VM, let's prepare one that we will copy at boot
 time.
 
-'''bash
+```bash
 sudo mkdir config/sysconfig
 sudo vi config/sysconfig/jira
 CATALINA_BASE="/opt/jira"
 CATALINA_TMPDIR="/opt/jira/temp"
 TOMCAT_USER="jira"
 CATALINA_PID="/var/run/jira.pid"
-'''
+```
 
 We also have to provide a copy of /usr/lib/systemd/system/tomcat for ourservice.
 
@@ -338,14 +338,14 @@ executed, we are going to need to pass it via a shell command.
 
 In Wiki VM's Terminal:
 
-'''bash
+```bash
 sudo mkdir -p config/systemd/system
 sudo cp /usr/lib/systemd/system/tomcat.service config/systemd/system/jira.service
-'''
+```
 
 Let's modify the ExecStart, ExecStop, User and Group lines as follow
 
-'''bash
+```bash
 sudo vi config/systemd/system/jira.service
 ExecStart=/bin/bash -c 'export SERVICE_NAME="jira"; /usr/sbin/tomcat-sysd start'
 ExecStop=/bin/bash -c 'export SERVICE_NAME="jira"; /usr/sbin/tomcat-sysd stop'
@@ -357,7 +357,7 @@ Group=jira
 Let's prepare our CATALINA_BASE (/opt/jira), but we first need our jira account
 set-up
 
-'''bash
+```bash
 sudo chown jira:root var/log/jira
 sudo chmod 770 var/log/jira
 sudo chown jira:root var/jira
@@ -366,21 +366,21 @@ cd opt/jira
 sudo mkdir -p conf/Catalina/localhost logs temp webapps work
 sudo chown jira logs temp work
 sudo chmod 770 logs temp work
-'''
+```
 
 ### Preparing for a reboot ###
 
 Let's now edit our rc.local script so that we set everything in place when the
 VM reboots
 
-'''bash
+```bash
 cd /rw
 sudo vi config/rc.local
-'''
+```
 
 At the end of the file add the following
 
-'''bash
+```bash
 rmdir /opt
 ln -s /rw/opt /opt
 ln -s /rw/var/jira /var/jira
@@ -391,7 +391,7 @@ touch /var/run/jira.pid
 chown jira:jira /var/run/jira.pid
 /usr/bin/systemctl enable jira &
 /usr/bin/systemctl start jira &
-'''
+```
 
 Preparing the Confluence Tomcat instance
 ----------------------------------------
@@ -402,11 +402,11 @@ In the read-write partition, let's first prepare a set of folders on which we
 will deploy our application and data so that they survive a reboot. In Wiki VM's
 Terminal:
 
-'''bash
+```bash
 sudo mkdir -p opt/confluence
 sudo mkdir -p var/log/confluence
 sudo mkdir -p var/confluence
-'''
+```
 
 ### Integrating with systemd ###
 
@@ -417,13 +417,13 @@ name we want to give to this tomcat instance) and set the variables we need.
 As the file will not be persisted in our Qubes VM, let's prepare one that we
 will copy at boot time.
 
-'''bash
+```bash
 sudo vi config/sysconfig/confluence
 CATALINA_BASE="/opt/confluence"
 CATALINA_TMPDIR="/opt/confluence/temp"
 TOMCAT_USER="confluence"
 CATALINA_PID="/var/run/confluence.pid"
-'''
+```
 
 We also have to provide a copy of /usr/lib/systemd/system/tomcat for our
 service.
@@ -434,26 +434,26 @@ executed, we are going to need to pass it via a shell command.
 
 In Wiki VM's Terminal:
 
-'''bash
+```bash
 sudo cp config/systemd/system/jira.service config/systemd/system/confluence.service
-'''
+```
 
 Let's modify the ExecStart, ExecStop, User and Group lines as follow:
 
-'''bash
+```bash
 sudo vi config/systemd/system/confluence.service
 ExecStart=/bin/bash -c 'export SERVICE_NAME="confluence"; /usr/sbin/tomcat-sysd start'
 ExecStop=/bin/bash -c 'export SERVICE_NAME="confluence"; /usr/sbin/tomcat-sysd stop'
 User=confluence
 Group=confluence
-'''
+```
 
 ### Preparing CATALINA_BASE ###
 
 Let's prepare our CATALINA_BASE (/opt/confluence), but we first need our
 confluence account set-up.
 
-'''bash
+```bash
 sudo chown confluence:root var/log/confluence
 sudo chmod 770 var/log/confluence
 sudo chown confluence:root var/confluence
@@ -462,21 +462,21 @@ cd opt/confluence
 sudo mkdir -p conf/Catalina/localhost logs temp webapps work
 sudo chown confluence logs temp work
 sudo chmod 770 logs temp work
-'''
+```
 
 ### Preparing for a reboot ###
 
 Let's now edit our rc.local script so that we set everything in place when the
 VM reboots.
 
-'''bash
+```bash
 cd /rw
 sudo vi config/rc.local
-'''
+```
 
 At the end of the file add the following:
 
-'''bash
+```bash
 ln -s /rw/var/confluence /var/confluence
 ln -s /rw/var/log/confluence /var/log/confluence
 cp /rw/config/sysconfig/confluence /etc/sysconfig/
@@ -485,7 +485,7 @@ touch /var/run/confluence.pid
 chown confluence:confluence /var/run/confluence.pid
 /usr/bin/systemctl enable confluence &
 /usr/bin/systemctl start confluence &
-'''
+```
 
 Installing Jira
 ---------------
@@ -525,15 +525,15 @@ This  is documented in the [Qubes OS user documentation] page.
 
 Let's expand our Jira distribution.
 
-'''bash
+```bash
 cd
 tar xzvf QubesIncoming/disp<X>/atlassian-jira-<version>.tar.gz
 cd atlassian-jira-<version>-standalone
-'''
+```
 
 Let's move into place the things we want.
 
-'''bash
+```bash
 sudo mv conf/* /rw/opt/jira/conf
 sudo chown -R root:root /rw/opt/jira/conf
 sudo mv atlassian-jira /rw/opt/jira
@@ -546,18 +546,18 @@ sudo mv licenses /rw/opt/jira
 sudo chown -R root:root /rw/opt/jira/licenses
 sudo mv tomcat-docs /rw/opt/jira
 sudo chown -R root:root /rw/opt/jira/tomcat-docs
-'''
+```
 
 Let's make sure all parameters are past to the JVM. You can review this which is
 what was in bin/setenv.sh which builds up JAVA_OPTS
 
-'''bash
+```bash
 sudo vi /rw/config/sysconfig/jira
-'''
+```
 
 Add the following at the begining of the file:
 
-'''
+```
 #
 #  Occasionally Atlassian Support may recommend that you set some specific JVM a rguments.  You can use this variable below to do that.
 #
@@ -576,20 +576,20 @@ JVM_REQUIRED_ARGS="-Djava.awt.headless=true -Datlassian.standalone=JIRA -Dorg.ap
  
 # Perm Gen size needs to be increased if encountering OutOfMemoryError: PermGen problems. Specifying PermGen size is not valid on IBM JDKs
 JIRA_MAX_PERM_SIZE=384m
-'''
+```
 
 You should have then this...
 
-'''
+```
 CATALINA_BASE="/opt/jira"
 CATALINA_TMPDIR="/opt/jira/temp"
 TOMCAT_USER="jira"
 CATALINA_PID="/var/run/jira.pid"
-'''
+```
 
 Add the following at the end:
 
-'''
+```
 #-----------------------------------------------------------------------------------
 #
 # In general don't make changes below here
@@ -598,23 +598,23 @@ Add the following at the end:
 JVM_EXTRA_ARGS="-XX:+PrintGCDateStamps -XX:-OmitStackTraceInFastThrow"
  
 JAVA_OPTS="-XX:MaxPermSize=${JIRA_MAX_PERM_SIZE} -Xms${JVM_MINIMUM_MEMORY} -Xmx${JVM_MAXIMUM_MEMORY} ${JAVA_OPTS} ${JVM_REQUIRED_ARGS} ${DISABLE_NOTIFICATIONS} ${JVM_SUPPORT_RECOMMENDED_ARGS} ${JVM_EXTRA_ARGS}
-'''
+```
 
 OK, let's clean the dust up.
 
-'''bash
+```bash
 cd
 rm -rf atlassian-jira-<version>-standalone
-'''
+```
 
 ### Set the Jira Home directory ###
 
 Let's set our JIRA Home Directory.
 
-'''bash
+```bash
 sudo vi /rw/opt/jira/atlassian-jira/WEB-INF/classes/jira-application.properties
 jira.home = /var/jira
-'''
+```
 
 ### Fix the context ###
 
@@ -622,10 +622,10 @@ There is a small bug (or relaxed configuration as it is a standalone distrib)
 in the Atlassian package as the server.xml is referring to catalina.home instead
 of catalina.base.
 
-'''bash
+```bash
 sudo vi /rw/opt/jira/conf/server.xml
 replace the docBase value from ${catalina.home} to ${catalina.base}
-'''
+```
 
 Note: While you are at it, you may want to also change the ports the server is
 listening on.
@@ -634,39 +634,39 @@ listening on.
 
 #### Set the context path ####
 
-'''bash
+```bash
 sudo vi /rw/opt/jira/conf/server.xml
-'''
+```
 
 Replace the following line:
 
-'''xml
+```xml
 <Context path="" docBase="${catalina.base}/atlassian-jira" reloadable="false" useHttpOnly="true">
-'''
+```
 
 With:
 
-'''xml
+```xml
 <Context path="/jira" docBase="${catalina.base}/atlassian-jira" reloadable="false" useHttpOnly="true">
-'''
+```
 
 #### Set the URL for redirection ####
 
-'''bash
+```bash
 sudo vi /rw/opt/jira/conf/server.xml
-'''
+```
 
 Replace the following line:
 
-'''xml
+```xml
 <Connector port="8080" maxThreads="150" minSpareThreads="25" connectionTimeout="20000" enableLookups="false" maxHttpHeaderSize="8192" protocol="HTTP/1.1" useBodyEncodingForURI="true" redirectPort="8443" acceptCount="100" disableUploadTimeout="true"/>
-'''
+```
 
 With:
 
-'''xml
+```xml
 <Connector port="8080" maxThreads="150" minSpareThreads="25" connectionTimeout="20000" enableLookups="false" maxHttpHeaderSize="8192" protocol="HTTP/1.1" useBodyEncodingForURI="true" redirectPort="8443" acceptCount="100" disableUploadTimeout="true" proxyName="www.example.com" proxyPort="443" scheme="https"/>
-'''
+```
 
 Which set the name of the external URL, its port and protocol so that content
 generated by Tomcat contains links in the form 'https://www.example.com/<blah>'.
@@ -694,15 +694,15 @@ This  is documented in the [Qubes OS user documentation] page.
 
 Let's expand our Confluence distribution.
 
-'''bash
+```bash
 cd
 tar xzvf QubesIncoming/disp<X>/atlassian-confluence-<version>.tar.gz
 cd atlassian-confluence-<version>
-'''
+```
 
 Let's move into place the things we want.
 
-'''bash
+```bash
 sudo mv conf/* /rw/opt/confluence/conf
 sudo chown -R root:root /rw/opt/confluence/conf
 sudo mv confluence /rw/opt/confluence
@@ -715,19 +715,19 @@ sudo chown -R root:root /rw/opt/confluence/licenses
 Let's make sure all parameters are past to the JVM. You can review this which is
 what was in 'bin/setenv.sh' which builds up 'JAVA_OPTS'
 
-'''bash
+```bash
 sudo vi /rw/config/sysconfig/confluence
-'''
+```
 
 Add the following at the end of the file:
 
-'''
+```
 JAVA_OPTS="-Xms256m -Xmx512m -XX:MaxPermSize=256m $JAVA_OPTS -Djava.awt.headless=true "
-'''
+```
 
 And clean the dust up.
 
-'''bash
+```bash
 cd
 rm -rf atlassian-confluence-<version>
 
@@ -735,48 +735,48 @@ rm -rf atlassian-confluence-<version>
 
 Let's set our Confluence Home Directory.
 
-'''bash
+```bash
 sudo vi /rw/opt/confluence/confluence/WEB-INF/classes/confluence-init.properties
 confluence.home = /var/confluence
-'''
+```
 
 ### Prepare Confluence for reverse proxy aware responses ###
 
 #### Set the context path ####
 
-'''bash
+```bash
 sudo vi /rw/opt/confluence/conf/server.xml
-'''
+```
 
 Replace the following line:
 
-'''xml
+```xml
 <Context path="" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
-'''
+```
 
 With:
 
-'''xml
+```xml
 <Context path="/confluence" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
-'''
+```
 
 #### Set the URL for redirection ####
 
-'''bash
+```bash
 sudo vi /rw/opt/jira/conf/server.xml
-'''
+```
 
 Replace the following line:
 
-'''xml
+```xml
 <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="8090" minProcessors="5" maxProcessors="75" enableLookups="false" redirectPort="8443" acceptCount="10" debug="0" connectionTimeout="20000" useURIValidationHack="false" URIEncoding="UTF-8"/>
-'''
+```
 
 With:
 
-'''xml
+```xml
 <Connector className="org.apache.coyote.tomcat4.CoyoteConnector" port="8090" minProcessors="5" maxProcessors="75" enableLookups="false" redirectPort="8443" acceptCount="10" debug="0" connectionTimeout="20000" useURIValidationHack="false" URIEncoding="UTF-8" proxyName="www.example.com" proxyPort="443" scheme="https"/>
-'''
+```
 
 Which set the name of the external URL, its port and protocol so that content
 generated by Tomcat contains links in the form 'https://www.example.com/<blah>'.
@@ -804,44 +804,44 @@ In the read-write partition, let's first prepare a set of folders on which we
 will deploy our application and data so that they survive a reboot.In Wiki VM's
 Terminal:
 
-'''bash
+```bash
 cd /rw
 sudo mkdir -p config/httpd/conf
 sudo mkdir -p config/httpd/conf.d
 sudo mkdir -p config/httpd/conf.modules.d
-'''
+```
 
 ### Configuring httpd ###
 
 Let's prepare our httpd.conf file.
 
-'''bash
+```bash
 sudo cp /etc/httpd/conf/httpd.conf config/httpd/conf
 sudo vi config/httpd/conf/httpd.conf
-'''
+```
 
 Comment out the following line:
 
-'''
+```
 Listen 80
-'''
+```
 
 Change the following line:
 
-'''
+```
 ServerAdmin root@localhost
-'''
+```
 
 Add the following lines:
 
-'''
+```
 ServerName www.example.com
-'''
+```
 
 The proxy load module file /etc/httpd/conf.modules.d/00-proxy.conf is already
 loading everything.Let's prepare the associated conf file:
 
-'''bash
+```bash
 sudo vi config/httpd/conf.d/00-proxy.conf
 ProxyRequests Off
 ProxyPreserveHost On
@@ -869,19 +869,19 @@ ProxyPreserveHost On
     SetEnv proxy-interim-response RFC
     SetEnv proxy-initial-not-pooled 1
 </Location>
-'''
+```
 
 ### Configuring openssl ###
 
 Let's start by adjusting the SSL configuration file.
 
-'''bash
+```bash
 sudo cp /etc/httpd/conf.d/ssl.conf config/httpd/conf.d
 sudo vi config/httpd/conf.d/ssl.conf
 SSLProtocol TLSv1.2
 SSLCipherSuite ECDHE-ECDSA-AES128-SHA256:DHE-RSA-AES128-SHA
 SSLHonorCipherOrder on
-'''
+```
 
 To enable TLSv1.2 in Firefox:
 
@@ -897,10 +897,10 @@ To enable TLSv1.2 in Firefox:
 Let's generate our private key. I will not get it signed as I do not have a
 fixed IP address and do not want to trust Certificates Authorities.
 
-'''bash
+```bash
 sudo yum install crypto-utils
 genkey www.example.com
-'''
+```
 
 Note: I have used a 4096bits key without certificate request or passphrase.
 
@@ -917,37 +917,37 @@ certificate (as reliant at the moment on md5).
 Let's now edit our rc.local script so that we set everything in place when the
 VM reboots.
 
-'''bash
+```bash
 sudo vi config/rc.local
-'''
+```
 
 At the end of the file add the following:
 
-'''bash
+```bash
 mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.origin
 cp /rw/config/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf
 cp /rw/config/httpd/conf.d/00-proxy.conf /etc/httpd/conf.d
 cp /rw/config/httpd/conf.d/ssl.conf /etc/httpd/conf.d
 /usr/bin/systemctl enable httpd &
 /usr/bin/systemctl start httpd &
-'''
+```
 
 If you want to be able to access Jira and Confluence from another browser than
 the wiki VM one, add the following line where 10.137.2.x is the wiki VM's
 IPAddress of eth0 (ifconfig | grep -i ast) and y.y.y.y/z is the subnet you want
 to allow in.
 
-'''bash
+```bash
 /usr/sbin/iptables -I INPUT 5 -j ACCEPT -d 10.137.2.x -s y.y.y.y/z -p tcp --dport 443 -m state --state NEW
-'''
+```
 
 You need to have www.example.com configured in your DNS. If you prefer to do
 that later you can add the following line to allow you to continue the
 configuration via the wiki VM firewall without the DNS entry set.
 
-'''bash
+```bash
 echo 10.137.2.x www.example.com >> /etc/hosts
-'''
+```
 
 Note: becareful to have two superior sign so that the line is appended to the
 file.
@@ -959,9 +959,9 @@ Testing
 
 Stop the wiki VM.
 
-'''bash
+```bash
 sudo halt
-'''
+```
 
 Start the VM by opening its Firefox browser and browse to
 'https://www.example.com'
@@ -987,17 +987,17 @@ on the server side.
 
 Check the service is started:
 
-'''bash
+```bash
 sudo systemctl status httpd
-'''
+```
 
 #### Apache httpd service is listening on the right port ####
 
 Check the service is listening on the right port (443)
 
-'''bash
+```bash
 netstat -an | grep LIST | grep -v STREAM
-'''
+```
 
 #### Browser proxy settings ####
 
@@ -1037,20 +1037,20 @@ check the protocols you browser support by going to this
 If you manage to connect you can view which cipher suite you used by looking in
 the httpd logs:
 
-'''bash
+```bash
 sudo su
 tail /var/log/httpd/ssl_request_log
 exit
-'''
+```
 
 ### Testing the Jira and Confluence tomcat instances ###
 
 Browse to Jira and Confluence
 
-'''bash
+```bash
 https://www.example.com/jira
 https://www.example.com/confluence
-'''
+```
 
 After a little time you should see the Jira Welcome page and the Confluence
 Setup Wizard page.
@@ -1061,35 +1061,35 @@ Setup Wizard page.
 
 Check the service is started
 
-'''bash
+```bash
 sudo systemctl status jira 
-'''
+```
 
 In case of issues check the logs:
 
-'''bash
+```bash
 sudo cat /opt/jira/logs/catalina.out
-'''
+```
 
 #### Jira tomcat instance is visible through the reverse proxy ####
 
 Check that your request is hitting httpd:
 
-'''bash
+```bash
 sudo su
 tail /var/log/httpd/ssl_request_log
 tail /var/log/httpd/ssl_access_log
 tail /var/log/httpd/ssh_error_log
 exit 
-'''
+```
 
 Check that your request is hitting Jira tomcat instance:
 
-'''bash
+```bash
 sudo su
 tail /opt/jira/logs/access_log.<date>
 exit
-'''
+```
 
 The first you should look for is a 302 response for /jira redirecting you.
 
