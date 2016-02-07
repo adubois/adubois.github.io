@@ -81,7 +81,7 @@ Launch the terminal in the template.
  * Click Application Menu (top left)
  * Select Template fedora-18-x64 / fedora-18-x64: Terminal
 
-Install the PostgreSQL Server by typing in the template's Terminal:
+Install the PostgreSQL Server by typing in the template\'s Terminal:
 
 '''bash
 sudo yum install postgresql-server
@@ -130,7 +130,6 @@ For these changes to be visible to the wiki VM, shutdown the template VM.
 sudo halt
 '''
 
-Test
 
 [Jira]: https://www.atlassian.com/software/jira
 [Confluence]: https://www.atlassian.com/software/confluence
