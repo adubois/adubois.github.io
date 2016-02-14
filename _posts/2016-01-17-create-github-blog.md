@@ -243,4 +243,4 @@ Looking forward  to read your future posts ;-)
 [Git]: https://en.wikipedia.org/wiki/Git_%28software%29
 [find these tips]: https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider/
 
-[start with Git]: /howto/2016/01/16/starting-with-git/
+[start with Git]: /howto/2016/01/16/start-with-git/
