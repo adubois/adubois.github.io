@@ -17,3 +17,5 @@ github_username:  adubois
 
 # Build settings
 markdown: kramdown
+
+theme: jekyll-theme-slate
